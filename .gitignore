@@ -1,0 +1,4 @@
+pinecone_api_key.py
+openAI_api_key.py
+.venv
+__pycache__

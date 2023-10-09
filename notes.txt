@@ -1,0 +1,23 @@
+Experiments:
+
+> RAG_test01: 
+    >> Able to use RAG and give custom information about a txt file, but unable to give any information about the outside world nor remember what the user previously said.
+
+
+> RAG_test02: 
+    >> Able to use RAG and give custom information about a txt file, and able to give any information about the outside world as well remember what the content of the current conversation.
+    >> However, unable to answer what questions the user previously asked despite remembering the content of the conversation, and the awareness of the context sometimes seems limited.
+    >> Investigate better chat history features provided by langchain ?
+    >> Implement a way to use a system prompt alongside a user prompt.
+    >> Doen't seem to be aware that it has access to files, despite being able to take the data they contain into consideration.
+    >> Needs metadata
+
+
+> RAG_test03:
+    >> "Parasitic RAG" issue, the program will fetch some useless chunks from the vector store when asked questions such as "How can I use this?", because it will use similarity search to fetch the chunks of texts closest to this sentence, whith no awareness of what "this" is in the context. Despite having access to the chat history, it will also be swimming in a sea of useless retrieved chunks of text.
+    >> Because of Parasitic RAG, the program will take into consideration all this useless context and think that it is part of the user's question, leading to irrelevant answers.
+
+    >> improvements:
+        >>> cut access to RAG when not necessary
+        >>> do not include the retrieved context in the chat history, only the original question and the answer?
+        >>> ignore chunks with a bad similarity search score
