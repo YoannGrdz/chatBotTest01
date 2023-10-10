@@ -30,29 +30,20 @@ for i in range(len(docs)):
 # Initialize chat model
 chat = ChatOpenAI(
     openai_api_key=os.environ["OPENAI_API_KEY"],
-    model='gpt-3.5-turbo'
+    # model='gpt-3.5-turbo',
+    model="gpt-4",
+    temperature=0.3
 )
 
 systemPrompt = """
 
 ## Overview of your task:
-You will be given a piece of documentation, some menu or text from a website, or any other type of written document, and return an abbreviated version which is somewhere between the table of content and the short version of the document, and which will be formatted in Markdown syntax.
+You will be given a piece of documentation, some menu or text from a website, or any other type of written document, and return a detailed table of content (possibly with paragraphs of text as extra detail if the original document contains paragraphs) for the document using markdown syntax.
 
-
-## Format:
-You will be using the markdown format, primarily the headers, unordered lists, and ordered lists, whichever is the most appropriate.
-Your role is to summarize this content the best you can, without mentioning that you are summarizing a document nor mentioning the document itself, extracting the main headers / subheaders of the document if there are any, and detailing each one with a small paragraph which doesn't leave out any important detail, based on the text content which corresponds to the original header
-If the document has no header but that you can summarize its different parts using some, create headers for these parts.
-If the document only contains headers, like a table of content for instance, just rewrite it as it is, using the markdown format.
-
-## What to do when information is missing:
-If you do not have any information to add details to a point or header in your summary, do not make it up, and just write the header or point without any details.
-
-## Length of the summary:
-The length of the summary will depend on the length of the original document you are provided with, and the number of headers or paragraphs it has.
-
-## Dealing with lists:
-If the document is or contains a list of headers or any type of list without paragraphs, only return the list as it was, with the markdown format, and do not create paragraphs out of nowhere.
+## Documents containing tables of content or lists
+If the document you are given is already a table of content or a list of sections or a list of bullet points without paragraphs of text, or if the document contains one of these things, return the table of content as it is without adding anything, and use the markdown syntax.
+This is very important, do not create extra information for lists of items.
+Your job is to make things shorter or equal, not longer.
 
 ### example with a list / table of content:
 
@@ -66,7 +57,7 @@ Cars in movies
 
 ”””
 
-What you’ll return: “””
+What you will return: “””
 
 History of automobile
 Brands of cars
@@ -74,12 +65,16 @@ Famous cars
 Car racing
 Luxury cars
 Cars in movies
+“””
 
 
-”””
 
-## Returning only the short version:
-Your answer will only contain your short version of the document, you will not greet the user, you will not add an intro sentence like “Here is the summary of your text:” or “Sure, I can help you summarize this document.”, and instead, you will directly write the summary as asked, and nothing else. You will not mention the document in a sentence like “The document deals with the different types of car engines”, instead you will simply rewrite a concise version of each part, with headers and subheaders when possible.
+## Documents with paragraphs of text
+For documents with paragraphs of text, create abbreviated paragraphs for them and place them under the relevant title / bullet point / number in the table of content.
+
+
+## Returning only the table of content.
+Your answer will only contain your short version of the document, you will not greet the user, you will not add an intro sentence like “Here is the summary of your text:” or “Sure, I can help you summarize this document.”, and instead, you will directly write the table of content as asked, and nothing else. You will not mention the document in a sentence like “The document deals with the different types of car engines”, instead you will simply rewrite a concise version of each part, with headers and subheaders when possible.
 
 ## In case the document is unsuitable for the request:
 If you are unavailable to provide a shortened version of the document, just return “Unable to provide a summary of the document.”
