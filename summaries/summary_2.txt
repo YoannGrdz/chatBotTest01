@@ -1,22 +1,19 @@
-# Langchain: Chains
-
 ## Modules
-- Chains
 
-## Chains
-- Introduction to Chains
-- Definition of Chain
-- Importance of Chains
-- Specifics about Chains
-  - How-to
-  - Foundational
-  - Document
-- Need for Chains
+### Chains
+LangChain provides the Chain interface for complex applications that require chaining LLMs with each other or with other components. This interface simplifies and modularizes the implementation of complex applications.
 
-## Getting Started
-- Using LLMChain
-  - Creating a prompt template
-  - Creating a simple chain
-  - Running the chain
-  - Using multiple variables
-  - Using a chat model in an LLMChain
+#### Why do we need chains?
+Chains allow the combination of multiple components to create a single, coherent application. They can be used to create complex chains by combining multiple chains together, or by combining chains with other components.
+
+#### Using LLMChain
+The LLMChain is the most basic building block chain. It takes in a prompt template, formats it with the user input, and returns the response from an LLM. 
+
+#### Creating a simple chain
+A simple chain can be created that takes user input, formats the prompt with it, and then sends it to the LLM.
+
+#### Using multiple variables
+If there are multiple variables, you can input them all at once using a dictionary.
+
+#### Using a chat model in an LLMChain
+A chat model can also be used in an LLMChain.
